@@ -994,7 +994,7 @@
   color: white;
   padding: 14px 22px;
   border-radius: 30px;
-  font-size: 16px;
+  font-size: 200px;
   font-weight: 600;
   cursor: pointer;
   z-index: 9999;
@@ -1008,8 +1008,8 @@
 
 .chat-box {
   position: fixed;
-  bottom: 80px;
-  right: 25px;
+  bottom: 50px;
+  right: 55px;
   width: 300px;
   background: #fff;
   border-radius: 10px;
