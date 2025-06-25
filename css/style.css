@@ -982,3 +982,66 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+.chat-box {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-family: Arial, sans-serif;
+  z-index: 9999;
+}
+.chat-toggle {
+  background: #3b82f6;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+.chat-body {
+  background: #1e293b;
+  width: 300px;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 12px #000;
+  margin-top: 10px;
+}
+.chat-header {
+  background: #0f172a;
+  padding: 10px;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+.chat-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  font-size: 14px;
+  background: #1e293b;
+  color: #f8fafc;
+}
+.chat-body input {
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+  outline: none;
+  background: #334155;
+  color: white;
+}
+
