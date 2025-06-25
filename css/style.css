@@ -1082,8 +1082,9 @@
 /* --- Chatbot Styles --- */
 .chat-toggle {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
   background: #007bff;
   color: white;
   padding: 12px 16px;
@@ -1093,6 +1094,7 @@
   z-index: 9999;
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
+
 
 .chat-box {
   position: fixed;
