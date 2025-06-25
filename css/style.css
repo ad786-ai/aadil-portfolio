@@ -1082,18 +1082,26 @@
 /* --- Chatbot Styles --- */
 .chat-toggle {
   position: fixed;
-  bottom: 50%;
-  right: 50%;
-  transform: translate(50%, 50%);
-  background: #007bff;
+  bottom: 25px;
+  right: 25px;
+  background: linear-gradient(135deg, #6c5ce7, #00b894);
   color: white;
-  padding: 12px 16px;
-  border-radius: 50%;
-  font-size: 22px;
+  padding: 14px 22px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
   z-index: 9999;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+  border: none;
+  transition: all 0.3s ease;
 }
+
+.chat-toggle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.4);
+}
+
 
 
 .chat-box {
