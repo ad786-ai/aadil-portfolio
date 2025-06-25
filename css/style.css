@@ -1078,8 +1078,6 @@
 
 
 
-
-/* --- Chatbot Styles --- */
 .chat-toggle {
   position: fixed;
   bottom: 25px;
@@ -1092,31 +1090,26 @@
   font-weight: 600;
   cursor: pointer;
   z-index: 9999;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
   border: none;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
 }
-
 .chat-toggle:hover {
   transform: scale(1.05);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.4);
 }
-
-
 
 .chat-box {
   position: fixed;
   bottom: 80px;
-  right: 20px;
+  right: 25px;
   width: 300px;
-  max-height: 400px;
   background: #fff;
-  border-radius: 8px;
-  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   display: none;
   flex-direction: column;
+  overflow: hidden;
   z-index: 9999;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
 
 .chat-box.open {
@@ -1124,12 +1117,11 @@
 }
 
 .chat-header {
-  background: #007bff;
-  color: #fff;
+  background: #6c5ce7;
+  color: white;
   padding: 10px;
   font-weight: bold;
-  display: flex;
-  justify-content: space-between;
+  text-align: center;
 }
 
 .chat-messages {
@@ -1137,7 +1129,8 @@
   padding: 10px;
   overflow-y: auto;
   font-size: 14px;
-  background: #f9f9f9;
+  background: #f8f8f8;
+  max-height: 250px;
 }
 
 .chat-msg {
@@ -1146,9 +1139,9 @@
 
 #chatInput {
   border: none;
-  border-top: 1px solid #ccc;
   padding: 10px;
   font-size: 14px;
   outline: none;
   width: 100%;
+  border-top: 1px solid #ddd;
 }
