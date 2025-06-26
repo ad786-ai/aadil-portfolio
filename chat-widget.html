@@ -1,500 +1,71 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Chat Widget</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <style>
-        /* Custom CSS for chat widget to ensure it floats and looks good */
-        body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden; /* Prevent horizontal scroll */
-        }
-        #chat-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-        #chat-icon {
-            background-color: #3B82F6; /* Blue */
-            color: white;
-            border-radius: 9999px; /* Full rounded */
-            width: 60px;
-            height: 60px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s ease-in-out;
-        }
-        #chat-icon:hover {
-            transform: scale(1.05);
-        }
-        #chat-window {
-            background-color: white;
-            border-radius: 1rem; /* Rounded corners */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            width: 350px;
-            height: 500px;
-            margin-bottom: 15px;
-            display: none; /* Hidden by default */
-            flex-direction: column;
-            overflow: hidden;
-            border: 1px solid #E5E7EB; /* Light gray border */
-        }
-        #chat-header {
-            background-color: #4F46E5; /* Indigo */
-            color: white;
-            padding: 1rem;
-            border-top-left-radius: 1rem;
-            border-top-right-radius: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: bold;
-        }
-        #chat-messages {
-            flex-grow: 1;
-            padding: 1rem;
-            overflow-y: auto;
-            background-color: #F9FAFB; /* Off-white */
-        }
-        .message-bubble {
-            max-width: 80%;
-            padding: 0.6rem 1rem;
-            border-radius: 0.75rem;
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
-            font-size: 0.95rem;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-        }
-        .message-bubble.bot {
-            background-color: #E0F2FE; /* Light blue */
-            align-self: flex-start;
-            margin-right: auto;
-            color: #1E40AF;
-        }
-        .message-bubble.visitor {
-            background-color: #DBEAFE; /* Lighter blue */
-            align-self: flex-end;
-            margin-left: auto;
-            color: #1E40AF;
-        }
-        .message-bubble.admin {
-            background-color: #D1FAE5; /* Light green */
-            align-self: flex-start;
-            margin-right: auto;
-            color: #065F46;
-        }
-        #chat-input-area {
-            display: flex;
-            padding: 1rem;
-            border-top: 1px solid #E5E7EB;
-            background-color: white;
-        }
-        #chat-input {
-            flex-grow: 1;
-            padding: 0.75rem;
-            border: 1px solid #D1D5DB;
-            border-radius: 0.5rem;
-            margin-right: 0.75rem;
-            font-size: 0.9rem;
-        }
-        #send-button {
-            background-color: #4F46E5; /* Indigo */
-            color: white;
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: background-color 0.2s ease-in-out;
-        }
-        #send-button:hover {
-            background-color: #4338CA;
-        }
-        .chat-form-field {
-            margin-bottom: 1rem;
-        }
-        .chat-form-field label {
-            display: block;
-            font-size: 0.9rem;
-            font-weight: 500;
-            margin-bottom: 0.4rem;
-            color: #374151;
-        }
-        .chat-form-field input[type="text"],
-        .chat-form-field input[type="email"],
-        .chat-form-field textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #D1D5DB;
-            border-radius: 0.5rem;
-            font-size: 0.9rem;
-            box-sizing: border-box; /* Include padding in width */
-        }
-        .chat-form-field input[type="text"]:focus,
-        .chat-form-field input[type="email"]:focus,
-        .chat-form-field textarea:focus {
-            outline: none;
-            border-color: #4F46E5;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
-        }
-        .chat-form-actions {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 1rem;
-        }
-        .chat-form-actions button {
-            background-color: #4F46E5;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background-color 0.2s ease-in-out;
-        }
-        .chat-form-actions button:hover {
-            background-color: #4338CA;
-        }
-        #loading-indicator {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.2rem;
-            color: #4F46E5;
-            z-index: 10;
-            border-radius: 1rem;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Chat</title>
+  <style>
+    .chat-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #4f46e5;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 9999px;
+      cursor: pointer;
+      z-index: 9999;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    .chat-box {
+      display: none;
+      flex-direction: column;
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 300px;
+      height: 400px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      z-index: 9999;
+      overflow: hidden;
+    }
+    .chat-box.open {
+      display: flex;
+    }
+    .chat-header {
+      background: #4f46e5;
+      color: white;
+      padding: 10px;
+      font-weight: bold;
+      text-align: center;
+    }
+    .chat-messages {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      font-size: 14px;
+    }
+    .chat-message {
+      margin-bottom: 10px;
+    }
+    #chatInput {
+      border: none;
+      border-top: 1px solid #ccc;
+      padding: 10px;
+      font-size: 14px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+  </style>
+
+  <!-- Firebase SDKs -->
+  <script type="module" src="js/chatbot.js"></script>
 </head>
 <body>
-
-    <div id="chat-container">
-        <!-- Chat Icon -->
-        <div id="chat-icon" class="relative">
-            <i class="fas fa-comments"></i>
-            <span id="new-message-badge" class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full" style="display: none;">!</span>
-        </div>
-
-        <!-- Chat Window -->
-        <div id="chat-window">
-            <div id="chat-header">
-                <span>Chat Support</span>
-                <button id="close-chat-button" class="text-white hover:text-gray-200">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div id="chat-messages" class="flex flex-col">
-                <!-- Messages will be appended here -->
-            </div>
-            <div id="chat-input-area" class="hidden">
-                <input type="text" id="chat-input" placeholder="Type your message..." class="rounded-lg">
-                <button id="send-button" class="rounded-lg">Send</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Firebase SDK Imports -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, collection, addDoc, onSnapshot, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // Firebase Configuration (DO NOT CHANGE)
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-        // Initialize Firebase
-        let app;
-        let db;
-        let auth;
-        let userId = null;
-        let chatId = null; // Current chat session ID for the visitor
-        let chatInitialized = false; // Flag to prevent re-initialization
-
-        const chatIcon = document.getElementById('chat-icon');
-        const chatWindow = document.getElementById('chat-window');
-        const chatMessages = document.getElementById('chat-messages');
-        const chatInputArea = document.getElementById('chat-input-area');
-        const chatInput = document.getElementById('chat-input');
-        const sendButton = document.getElementById('send-button');
-        const closeChatButton = document.getElementById('close-chat-button');
-        const newMessageBadge = document.getElementById('new-message-badge');
-
-        // Function to scroll messages to the bottom
-        function scrollToBottom() {
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        // Function to display a message in the chat window
-        function displayMessage(sender, text, isNew = false) {
-            const messageBubble = document.createElement('div');
-            messageBubble.classList.add('message-bubble', sender);
-            messageBubble.textContent = text;
-            chatMessages.appendChild(messageBubble);
-            scrollToBottom();
-
-            // Show badge if message is new and chat window is closed
-            if (isNew && chatWindow.style.display === 'none') {
-                newMessageBadge.style.display = 'flex';
-            }
-        }
-
-        // Function to add a loading indicator
-        function showLoading(message = 'Loading...') {
-            const loadingDiv = document.createElement('div');
-            loadingDiv.id = 'loading-indicator';
-            loadingDiv.textContent = message;
-            chatWindow.appendChild(loadingDiv);
-        }
-
-        // Function to remove loading indicator
-        function hideLoading() {
-            const loadingDiv = document.getElementById('loading-indicator');
-            if (loadingDiv) {
-                loadingDiv.remove();
-            }
-        }
-
-        // Authenticate anonymously and set up Firestore
-        async function initializeChat() {
-            if (chatInitialized) return; // Prevent multiple initializations
-            chatInitialized = true;
-
-            showLoading('Connecting to chat...');
-
-            try {
-                // Initialize Firebase only once
-                if (!app) {
-                    app = initializeApp(firebaseConfig);
-                    db = getFirestore(app);
-                    auth = getAuth(app);
-                }
-
-                // Sign in anonymously if not already signed in
-                if (!auth.currentUser) {
-                    await signInAnonymously(auth);
-                }
-                
-                // Set userId after authentication
-                userId = auth.currentUser?.uid || crypto.randomUUID();
-
-                console.log("Firebase initialized and authenticated. User ID:", userId);
-                hideLoading();
-                startBotSequence();
-
-            } catch (error) {
-                console.error("Error initializing Firebase or authenticating:", error);
-                hideLoading();
-                displayMessage('bot', 'Oops! There was an error connecting to chat. Please try again later.');
-            }
-        }
-
-        // Bot sequence for initial data collection
-        async function startBotSequence() {
-            displayMessage('bot', 'Hi there! How can I help you today?');
-            await new Promise(resolve => setTimeout(resolve, 500)); // Small delay for better UX
-
-            // Ask for name
-            await askQuestion('name', 'What is your name?');
-
-            // Ask for email
-            await askQuestion('email', 'What is your email address?');
-
-            // Ask for purpose
-            await askQuestion('purpose', 'What is the purpose of your visit?');
-
-            await new Promise(resolve => setTimeout(resolve, 500)); // Small delay
-            displayMessage('bot', 'Thank you for providing your details! I will contact you soon.');
-            await new Promise(resolve => setTimeout(resolve, 500)); // Small delay
-            
-            // Show option for live chat
-            const liveChatOption = document.createElement('div');
-            liveChatOption.classList.add('message-bubble', 'bot', 'cursor-pointer', 'font-bold');
-            liveChatOption.textContent = 'Click here for Live Chat!';
-            liveChatOption.style.cursor = 'pointer';
-            liveChatOption.onclick = startLiveChat;
-            chatMessages.appendChild(liveChatOption);
-            scrollToBottom();
-        }
-
-        async function askQuestion(field, questionText) {
-            return new Promise(resolve => {
-                displayMessage('bot', questionText);
-                const inputForm = document.createElement('div');
-                inputForm.classList.add('chat-form-field');
-                inputForm.innerHTML = `
-                    <input type="${field === 'email' ? 'email' : 'text'}" id="input-${field}" placeholder="${field === 'email' ? 'your@example.com' : 'Your answer'}" class="rounded-lg">
-                    <div class="chat-form-actions">
-                        <button id="submit-${field}" class="rounded-lg">Submit</button>
-                    </div>
-                `;
-                chatMessages.appendChild(inputForm);
-                scrollToBottom();
-
-                const inputField = document.getElementById(`input-${field}`);
-                const submitButton = document.getElementById(`submit-${field}`);
-
-                const handleSubmission = async () => {
-                    const value = inputField.value.trim();
-                    if (value) {
-                        displayMessage('visitor', value);
-                        // Remove the input form
-                        inputForm.remove();
-                        // Store in temporary object or directly to Firestore for new chat session
-                        if (!chatId) { // Create a new chat session only once
-                            chatId = await createChatSession(field, value);
-                        } else {
-                            // Update existing chat session
-                            const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, chatId);
-                            await updateChatSession(chatDocRef, field, value);
-                        }
-                        resolve(value);
-                    } else {
-                        // Optionally provide feedback to user
-                        displayMessage('bot', 'Please provide a valid response.');
-                    }
-                };
-
-                submitButton.addEventListener('click', handleSubmission);
-                inputField.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        handleSubmission();
-                    }
-                });
-            });
-        }
-
-        async function createChatSession(firstField, firstValue) {
-            try {
-                // Ensure userId is available
-                if (!userId) {
-                    await signInAnonymously(auth);
-                    userId = auth.currentUser?.uid || crypto.randomUUID();
-                }
-
-                const chatDoc = {
-                    visitorId: userId,
-                    createdAt: serverTimestamp(),
-                    status: 'active',
-                    messages: [], // Initialize with empty messages array
-                    visitorName: firstField === 'name' ? firstValue : '',
-                    visitorEmail: firstField === 'email' ? firstValue : '',
-                    visitorPurpose: firstField === 'purpose' ? firstValue : ''
-                };
-                const docRef = await addDoc(collection(db, `artifacts/${appId}/public/data/chats`), chatDoc);
-                console.log("New chat session created with ID:", docRef.id);
-                return docRef.id;
-            } catch (e) {
-                console.error("Error creating chat session:", e);
-                displayMessage('bot', 'Error starting chat session. Please try again.');
-                return null;
-            }
-        }
-
-        async function updateChatSession(chatDocRef, field, value) {
-            try {
-                const updateData = {};
-                updateData[`visitor${field.charAt(0).toUpperCase() + field.slice(1)}`] = value;
-                await setDoc(chatDocRef, updateData, { merge: true }); // Use setDoc with merge to update specific fields
-            } catch (e) {
-                console.error("Error updating chat session:", e);
-            }
-        }
-
-
-        async function startLiveChat() {
-            // Remove the live chat option button
-            const liveChatOption = chatMessages.querySelector('.message-bubble.bot.cursor-pointer');
-            if (liveChatOption) {
-                liveChatOption.remove();
-            }
-
-            displayMessage('bot', 'You are now connected to live chat. Feel free to ask your questions!');
-            chatInputArea.classList.remove('hidden');
-            scrollToBottom();
-
-            // Set up real-time listener for messages in this chat session
-            if (chatId) {
-                const messagesRef = collection(db, `artifacts/${appId}/public/data/chats`, chatId, 'messages');
-                const q = query(messagesRef, orderBy('timestamp'));
-
-                onSnapshot(q, (snapshot) => {
-                    snapshot.docChanges().forEach((change) => {
-                        if (change.type === "added") {
-                            const msg = change.doc.data();
-                            // Only display messages that are not from this visitor (to avoid duplicating own messages)
-                            // Or if it's a bot/admin message.
-                            if (msg.sender !== 'visitor') { // Visitor messages are already displayed immediately
-                                displayMessage(msg.sender, msg.text, true); // Mark as new if incoming
-                                newMessageBadge.style.display = 'flex'; // Show badge on new incoming message
-                            }
-                        }
-                    });
-                }, (error) => {
-                    console.error("Error listening to messages:", error);
-                });
-            } else {
-                displayMessage('bot', 'Could not establish live chat. Please refresh and try again.');
-            }
-        }
-
-        // Send message function
-        async function sendMessage() {
-            const messageText = chatInput.value.trim();
-            if (messageText && chatId) {
-                displayMessage('visitor', messageText); // Display immediately
-                chatInput.value = ''; // Clear input
-
-                try {
-                    await addDoc(collection(db, `artifacts/${appId}/public/data/chats`, chatId, 'messages'), {
-                        sender: 'visitor',
-                        text: messageText,
-                        timestamp: serverTimestamp()
-                    });
-                    newMessageBadge.style.display = 'none'; // Hide badge once user sends a message
-                } catch (e) {
-                    console.error("Error sending message:", e);
-                    displayMessage('bot', 'Error sending message. Please try again.');
-                }
-            }
-        }
-
-        // Event Listeners
-        chatIcon.addEventListener('click', () => {
-            chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
-            if (chatWindow.style.display === 'flex') {
-                initializeChat(); // Initialize chat when window is opened
-                newMessageBadge.style.display = 'none'; // Hide badge when chat is opened
-            }
-        });
-
-        closeChatButton.addEventListener('click', () => {
-            chatWindow.style.display = 'none';
-        });
-
-        sendButton.addEventListener('click', sendMessage);
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
-    </script>
 </body>
 </html>
